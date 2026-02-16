@@ -35,7 +35,7 @@ These images should be stored in `img/input/<RESORT>`. See [img/input/grand_cali
 
 [ImageMagick](https://imagemagick.org/) is a free, open-source software suite that is required for stitching the image together and resizing it to fit the TV screen.
 
-[xchwarze/samsung-tv-ws-api](https://github.com/NickWaterton/samsung-tv-ws-api) is a Python library used to upload the image to the TV.
+[NickWaterton/samsung-tv-ws-api](https://github.com/NickWaterton/samsung-tv-ws-api) is a Python library used to upload the image to the TV.
 
 ## Crontab
 
