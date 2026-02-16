@@ -1,6 +1,12 @@
 # my-hotel-reservations-countdown
 Display the My Hotel Reservations countdown on my Frame TV
 
+## Dependencies
+
+[ImageMagick](https://imagemagick.org/) is a free, open-source software suite that is required for stitching the image together and resizing it to fit the TV screen.
+
+[xchwarze/samsung-tv-ws-api](https://github.com/xchwarze/samsung-tv-ws-api) is a Python library used to upload the image to the TV.
+
 ## Crontab
 
 Add these two lines to your crontab file: 
