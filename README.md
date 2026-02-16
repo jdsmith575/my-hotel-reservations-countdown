@@ -1,9 +1,7 @@
-# my-hotel-reservations-countdown
-The purpose of this project is to display the My Hotel Reservations countdown that you can see in the Disneyland or Disney World app on your phone on a Frame TV.
+# Disney Hotel Countdown
+The purpose of this project is to automatically display the My Hotel Reservations countdown that you can see in the Disneyland or Disney World app a [Samsung The Frame TV](https://www.samsung.com/us/lifestyle-tvs/the-frame/highlights/). Each day, a new image is to created that shows the number of days remaining and the image is uploaded to the TV.
 
 ![Screenshot of the countdown image that is created.](/img/input/sample.png)
-
-Each day, a new image is to created that shows the number of days remaining and the image is uploaded to the TV.
 
 ## Inputs
 
