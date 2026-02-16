@@ -17,6 +17,20 @@ These images should be stored in `img/input/<RESORT>`. See [img/input/grand_cali
 
 ### Variables for the scripts
 
+`build_image.sh` has several variables that you will need to set:
+
+* `END_DATE` is the day your trip begins in YYYY-MM-DD format.
+* `RESORT` is the name of the hotel you are staying at and the name of the folder the images are stored in.
+* `BORDER_COLOR` is the hex value of the color used for the left and right border. Use https://htmlcolorcodes.com/color-picker/ to pick the perfect color.
+* `SCREEN_HEIGHT` is the height of your TV screen in pixels. On my TV it is 2,870.
+* `BORDER_WIDTH` is the width of the borders that get added to each side of the image. You'll need to determine the width of the TV screen and do some basic math to figure this out. On my TV it is 485.
+
+`upload_image.sh` has two variables that you will need to set:
+
+* `TV_IP` is the IP address of your TV. If your TV isn't on a static IP you may want to set that up.
+* `OUTPUT_DIR` is the location of the image produced by build_image.sh
+* `PROJECT_ROOT` is the location of the xchwarze/samsung-tv-ws-api Python library.
+
 ## Dependencies
 
 [ImageMagick](https://imagemagick.org/) is a free, open-source software suite that is required for stitching the image together and resizing it to fit the TV screen.
