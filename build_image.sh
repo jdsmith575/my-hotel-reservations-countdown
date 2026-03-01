@@ -28,7 +28,7 @@ time_difference_seconds=$((end_timestamp - start_timestamp))
 # Convert the difference in seconds to days
 # There are 86400 seconds in a day (60 seconds * 60 minutes * 24 hours)
 days_difference=$((time_difference_seconds / 86400))
-days_padded=$(printf "%0*s" "3" "$days_difference")
+days_padded=$(printf "%0*d" "3" "$days_difference")
 echo "Number of days between $start_date and $END_DATE: 
 $days_difference / $days_padded"
 
