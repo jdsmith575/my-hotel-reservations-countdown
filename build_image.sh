@@ -55,13 +55,13 @@ else
 fi
 
 ## Start building the image
-magick "${INPUT_DIR}/${RESORT}/middle-left.PNG" \
+magick "${INPUT_DIR}/${RESORT}/middle-left.png" \
   "${INPUT_DIR}/${RESORT}/number-${hundreds}.png" \
-  "${INPUT_DIR}/${RESORT}/middle-spacer.PNG" \
+  "${INPUT_DIR}/${RESORT}/middle-spacer.png" \
   "${INPUT_DIR}/${RESORT}/number-${tens}.png" \
-  "${INPUT_DIR}/${RESORT}/middle-spacer.PNG" \
+  "${INPUT_DIR}/${RESORT}/middle-spacer.png" \
   "${INPUT_DIR}/${RESORT}/number-${ones}.png" \
-  "${INPUT_DIR}/${RESORT}/middle-right.PNG" \
+  "${INPUT_DIR}/${RESORT}/middle-right.png" \
   +append "${TEMP_DIR}/middle_combined.png"
 
 if [[ $? -ne 0 ]]; then
@@ -69,8 +69,8 @@ if [[ $? -ne 0 ]]; then
   exit 1
 fi
 
-magick "${INPUT_DIR}/${RESORT}/top.PNG" "${TEMP_DIR}/middle_combined.png" \
-  "${INPUT_DIR}/${RESORT}/bottom.PNG" -append "${TEMP_DIR}/all_small.png"
+magick "${INPUT_DIR}/${RESORT}/top.png" "${TEMP_DIR}/middle_combined.png" \
+  "${INPUT_DIR}/${RESORT}/bottom.png" -append "${TEMP_DIR}/all_small.png"
 
 if [[ $? -ne 0 ]]; then
   echo "Something went wrong! Exiting."
