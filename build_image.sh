@@ -7,7 +7,7 @@ RESORT="grand_californian" # the name of the hotel and the folder where the imag
 BORDER_COLOR="#FAC04B"     # pick a color that goes with your image
 SCREEN_HEIGHT=2870         # the height of your screen in pixels
 BORDER_WIDTH=485           # the width of a border that is added to the right and left so that the image fills the tv screen
-INPUT_DIR="./img/input/"
+INPUT_DIR="./img/input"
 OUTPUT_DIR="./img/output"
 TEMP_DIR="./img/temp"
 TODAY=$(date +%Y-%m-%d)
@@ -21,6 +21,10 @@ if [[ ${start_timestamp} > ${end_timestamp} ]]; then
   echo "The end date already passed. Exiting."
   exit 0
 fi
+
+# create the required directories and ignore errors
+mkdir "${OUTPUT_DIR}" 2>/dev/null
+mkdir "${TEMP_DIR}" 2>/dev/null
 
 # Calculate the difference in seconds
 time_difference_seconds=$((end_timestamp - start_timestamp))
@@ -50,8 +54,8 @@ if [ ! -f "${INPUT_DIR}/${RESORT}/number-${hundreds}.png" ] || \
   exit 1
 else
   echo "Found the source files. Continuing..."
-  # remove the yesterdays file
-  rm ${OUTPUT_DIR}/*.png
+  # remove yesterdays file
+  rm ${OUTPUT_DIR}/*.png 2>/dev/null
 fi
 
 ## Start building the image
