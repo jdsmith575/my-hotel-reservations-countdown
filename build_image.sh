@@ -1,5 +1,6 @@
 #!/bin/bash
 #set -x
+. ./commmon_functions.sh
 
 # set up variables
 END_DATE="2027-03-11"      # the day your trip begins YYYY-MM-DD
@@ -18,7 +19,7 @@ end_timestamp=$(date -d "$END_DATE" +%s)
 
 # exit if start is after end
 if [[ ${start_timestamp} > ${end_timestamp} ]]; then
-  echo "The end date already passed. Exiting."
+  log "The end date already passed. Exiting."
   exit 0
 fi
 
@@ -33,7 +34,7 @@ time_difference_seconds=$((end_timestamp - start_timestamp))
 # There are 86400 seconds in a day (60 seconds * 60 minutes * 24 hours)
 days_difference=$((time_difference_seconds / 86400))
 days_padded=$(printf "%0*d" "3" "$days_difference")
-echo "Number of days between $start_date and $END_DATE: 
+log "Number of days between $start_date and $END_DATE: 
 $days_difference / $days_padded"
 
 # split up the number of days into their digit places
@@ -50,10 +51,10 @@ fi
 if [ ! -f "${INPUT_DIR}/${RESORT}/number-${hundreds}.png" ] || \
   [ ! -f "${INPUT_DIR}/${RESORT}/number-${tens}.png" ] || \
   [ ! -f "${INPUT_DIR}/${RESORT}/number-${ones}.png" ]; then
-  echo "The source files don't exist. Exiting."
+  err "The source files don't exist. Exiting."
   exit 1
 else
-  echo "Found the source files. Continuing..."
+  log "Found the source files. Continuing..."
   # remove yesterdays file
   rm ${OUTPUT_DIR}/*.png 2>/dev/null
 fi
@@ -69,7 +70,7 @@ magick "${INPUT_DIR}/${RESORT}/middle-left.png" \
   +append "${TEMP_DIR}/middle_combined.png"
 
 if [[ $? -ne 0 ]]; then
-  echo "Something went wrong! Exiting."
+  err "Something went wrong! Exiting."
   exit 1
 fi
 
@@ -77,7 +78,7 @@ magick "${INPUT_DIR}/${RESORT}/top.png" "${TEMP_DIR}/middle_combined.png" \
   "${INPUT_DIR}/${RESORT}/bottom.png" -append "${TEMP_DIR}/all_small.png"
 
 if [[ $? -ne 0 ]]; then
-  echo "Something went wrong! Exiting."
+  err "Something went wrong! Exiting."
   exit 1
 fi
 
@@ -85,7 +86,7 @@ fi
 magick "${TEMP_DIR}/all_small.png" -resize ${SCREEN_HEIGHT}x "${TEMP_DIR}/all_big.png"
 
 if [[ $? -ne 0 ]]; then
-  echo "Something went wrong! Exiting."
+  err "Something went wrong! Exiting."
   exit 1
 fi
 
@@ -96,7 +97,7 @@ magick "${TEMP_DIR}/all_big.png" -bordercolor "${BORDER_COLOR}" \
   "${OUTPUT_DIR}/${days_difference}.png"
 
 if [[ $? -ne 0 ]]; then
-  echo "Something went wrong! Exiting."
+  err "Something went wrong! Exiting."
   exit 1
 fi
 
@@ -105,7 +106,7 @@ magick "${OUTPUT_DIR}/${days_difference}.png" -sharpen 0 \
   "${OUTPUT_DIR}/${days_difference}.png"
 
 if [[ $? -ne 0 ]]; then
-  echo "Something went wrong! Exiting."
+  err "Something went wrong! Exiting."
   exit 1
 fi
 
