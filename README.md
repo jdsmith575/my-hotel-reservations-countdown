@@ -19,7 +19,6 @@ These images should be stored in `img/input/<RESORT>`. See [img/input/grand_cali
 
 * `END_DATE` is the day your trip begins in YYYY-MM-DD format.
 * `RESORT` is the name of the hotel you are staying at and the name of the folder the images are stored in.
-* `BORDER_COLOR` is the hex value of the color used for the left and right border. Use https://htmlcolorcodes.com/color-picker/ to pick the perfect color.
 * `SCREEN_HEIGHT` is the height of your TV screen in pixels. On my TV it is 2,870.
 * `BORDER_WIDTH` is the width of the borders that get added to each side of the image. You'll need to determine the width of the TV screen and do some basic math to figure this out. On my TV it is 485.
 
@@ -28,6 +27,10 @@ These images should be stored in `img/input/<RESORT>`. See [img/input/grand_cali
 * `TV_IP` is the IP address of your TV. If your TV isn't on a static IP you may want to set that up.
 * `OUTPUT_DIR` is the location of the image produced by build_image.sh
 * `PROJECT_ROOT` is the location of the xchwarze/samsung-tv-ws-api Python library.
+
+`common_functions.sh` has one function that you will need to set if adding a new hotel. It has one variable:
+
+* `BORDER_COLOR` is the hex value of the color used for the left and right border. Use https://htmlcolorcodes.com/color-picker/ to pick the perfect color.a list of hotels and the border color to use.
 
 ## Dependencies
 
