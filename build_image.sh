@@ -1,17 +1,25 @@
 #!/bin/bash
 #set -x
-. ./commmon_functions.sh
+. ./common_functions.sh
 
 # set up variables
-END_DATE="2027-03-11"      # the day your trip begins YYYY-MM-DD
-RESORT="grand_californian" # the name of the hotel and the folder where the images are stored
-BORDER_COLOR="#FAC04B"     # pick a color that goes with your image
+END_DATE="2027-01-01"      # the day your trip begins YYYY-MM-DD
+RESORT="contemporary"      # the name of the hotel and the folder where the images are stored
 SCREEN_HEIGHT=2870         # the height of your screen in pixels
-BORDER_WIDTH=485           # the width of a border that is added to the right and left so that the image fills the tv screen
+BORDER_WIDTH=485           # the width of a border that is added to the right and left so that the image fills the screen
 INPUT_DIR="./img/input"
 OUTPUT_DIR="./img/output"
 TEMP_DIR="./img/temp"
 TODAY=$(date +%Y-%m-%d)
+
+# pick the border color
+BORDER_COLOR=$(pick_border_color "${RESORT}")
+if [[ -z "${BORDER_COLOR}" ]]; then
+  err "The border color could not be picked! Exiting."
+  exit 1
+else
+  log "Border color is ${BORDER_COLOR}"
+fi
 
 # Convert dates to Unix timestamps (seconds since epoch)
 start_timestamp=$(date -d "$TODAY" +%s)
@@ -34,7 +42,7 @@ time_difference_seconds=$((end_timestamp - start_timestamp))
 # There are 86400 seconds in a day (60 seconds * 60 minutes * 24 hours)
 days_difference=$((time_difference_seconds / 86400))
 days_padded=$(printf "%0*d" "3" "$days_difference")
-log "Number of days between $start_date and $END_DATE: 
+log "Number of days between $TODAY and $END_DATE: \
 $days_difference / $days_padded"
 
 # split up the number of days into their digit places
@@ -59,7 +67,8 @@ else
   rm ${OUTPUT_DIR}/*.png 2>/dev/null
 fi
 
-## Start building the image
+# Start building the middle by putting the numbers together with the borders
+# and spacers
 magick "${INPUT_DIR}/${RESORT}/middle-left.png" \
   "${INPUT_DIR}/${RESORT}/number-${hundreds}.png" \
   "${INPUT_DIR}/${RESORT}/middle-spacer.png" \
@@ -74,6 +83,7 @@ if [[ $? -ne 0 ]]; then
   exit 1
 fi
 
+# add the top and bottom to the middle
 magick "${INPUT_DIR}/${RESORT}/top.png" "${TEMP_DIR}/middle_combined.png" \
   "${INPUT_DIR}/${RESORT}/bottom.png" -append "${TEMP_DIR}/all_small.png"
 
