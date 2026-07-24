@@ -3,8 +3,8 @@
 . ./common_functions.sh
 
 # set up variables
-END_DATE="2027-01-01"      # the day your trip begins YYYY-MM-DD
-RESORT="contemporary"      # the name of the hotel and the folder where the images are stored
+END_DATE="2026-10-29"      # the day your trip begins YYYY-MM-DD
+RESORT="pop_century"       # the name of the hotel and the folder where the images are stored
 SCREEN_HEIGHT=2870         # the height of your screen in pixels
 BORDER_WIDTH=485           # the width of a border that is added to the right and left so that the image fills the screen
 INPUT_DIR="./img/input"
@@ -50,8 +50,8 @@ hundreds="${days_padded:0:1}"
 tens="${days_padded:1:1}"
 ones="${days_padded:2:1}"
 
-# change to the mickey head if less than 100 days
-if [[ "${hundreds}" -eq 0 ]]; then
+# change to the mickey head if less than 100 days and mickey exists
+if [[ "${hundreds}" -eq 0 ]] && [ -f "${INPUT_DIR}/${RESORT}/number-mickey.png" ]; then
   hundreds="mickey"
 fi
 
@@ -69,6 +69,7 @@ fi
 
 # Start building the middle by putting the numbers together with the borders
 # and spacers
+log "Building the middle of the image with the numbers..."
 magick "${INPUT_DIR}/${RESORT}/middle-left.png" \
   "${INPUT_DIR}/${RESORT}/number-${hundreds}.png" \
   "${INPUT_DIR}/${RESORT}/middle-spacer.png" \
@@ -84,6 +85,7 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # add the top and bottom to the middle
+log "Adding the top and bottom..."
 magick "${INPUT_DIR}/${RESORT}/top.png" "${TEMP_DIR}/middle_combined.png" \
   "${INPUT_DIR}/${RESORT}/bottom.png" -append "${TEMP_DIR}/all_small.png"
 
@@ -93,6 +95,7 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # resize the image to the height of the screen
+log "Resizing..."
 magick "${TEMP_DIR}/all_small.png" -resize ${SCREEN_HEIGHT}x "${TEMP_DIR}/all_big.png"
 
 if [[ $? -ne 0 ]]; then
@@ -102,6 +105,7 @@ fi
 
 # add the colored sidebar to each side of the composed image 
 # so it is the full width of the screen
+log "Adding the border..."
 magick "${TEMP_DIR}/all_big.png" -bordercolor "${BORDER_COLOR}" \
   -border ${BORDER_WIDTH}x \
   "${OUTPUT_DIR}/${days_difference}.png"
@@ -112,6 +116,7 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # sharpen the image
+log "Sharpening..."
 magick "${OUTPUT_DIR}/${days_difference}.png" -sharpen 0 \
   "${OUTPUT_DIR}/${days_difference}.png"
 
@@ -121,4 +126,6 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # clean up the temp directory
-rm ${TEMP_DIR}/*.png
+rm ${TEMP_DIR}/*.png 2>/dev/null
+
+log "Done!"
